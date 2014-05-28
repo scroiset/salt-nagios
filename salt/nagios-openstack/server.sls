@@ -1,4 +1,6 @@
 {% from "nagios-openstack/os-clients.jinja" import clients with context %}
+{% from "nagios-openstack/roles.jinja" import roles with context %}
+
 python-pip:
     pkg.installed
 
@@ -24,9 +26,26 @@ nagios-plugins-openstack:
             hostname: {{v['fqdn']}}
 {%endfor%}
 # add grouphost and theirs members
+{% for r in roles %}
+{%- set grain_match = 'roles:' + r %}
+{%- set hosts = salt['mine.get'](grain_match, 'grains.items', expr_form='grain').keys() %}
+
+/etc/nagios3/conf.d/hostgroup_{{r}}.cfg:
+{% if hosts|count > 0 %}
+    file.managed:
+        - source: salt://nagios-openstack/files/n_hostgroup.cfg
+        - template: jinja
+        - defaults:
+            hosts: {{",".join(hosts)}}
+            name: {{r}}
+{%else%}
+    file.absent
+{%endif%}
+{%endfor%}
+
 # add services to grouphost or hosts?
 
-/tmp/test1:
-    file.managed:
-        - source: salt://nagios-openstack/files/test
-        - template: jinja
+#/tmp/test1:
+#    file.managed:
+#        - source: salt://nagios-openstack/files/test
+#        - template: jinja
