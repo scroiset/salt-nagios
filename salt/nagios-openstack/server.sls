@@ -43,6 +43,9 @@ nagios-plugins-openstack:
 {%endif%}
 {%endfor%}
 
+# add commands (for remote checks)
+# note: nrpe remote check commands are generated on minions side
+
 # add services to grouphost or hosts?
 
 #/tmp/test1:
