@@ -1,0 +1,12 @@
+{%- set os_cmd = os.upper().replace('-', '_') %}
+{%- set params = salt['pillar.get']('nagios_plugins_params', {}) %}
+{%- if os.split('-')|count > 1 %}
+{%- set component = os.split('-')[0] + '/'%}
+{%- else %}
+{%- set component = '' %}
+{% endif %}
+{%- if not path %}
+{%- set path = '' %}
+{%endif%}
+Cmnd_Alias CMD_{{os_cmd}} = {{nagios_plugins_dir}}/{{path}}{{component}}check_{{os}}
+{{cmd_user}} ALL=(ALL) NOPASSWD: CMS_{{os_cmd}}

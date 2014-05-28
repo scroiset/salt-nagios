@@ -1,0 +1,3 @@
+{% for host, values in salt['mine.get']('roles:os-controler', 'grains.items', expr_form='grain').items() %}
+Host {{host}} == {{values}}
+{%endfor%}

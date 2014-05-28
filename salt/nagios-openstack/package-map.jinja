@@ -1,0 +1,14 @@
+{% set package_table = {
+    'Debian': {'sudo': 'sudo', 'git': 'git'},
+    'Ubuntu': {'sudo': 'sudo', 'git': 'git'},
+    'CentOS': {'sudo': 'sudo', 'git': 'git'},
+    'Fedora': {'sudo': 'sudo', 'git': 'git'},
+    'RedHat': {'sudo': 'sudo', 'git': 'git'},
+    'Gentoo': {'sudo': 'app-admin/sudo', 'git': 'git'}
+} %}
+
+{% if 'package_table' in pillar %}
+    {% set pkgs = pillar['package_table'] %}
+{% elif grains['os'] in package_table %}
+    {% set pkgs = package_table[grains['os']] %}
+{% endif %}
