@@ -9,7 +9,7 @@ nagios-nrpe-server-service:
         - name: nagios-nrpe-server
         - running
         - enable: True
-        - reload: True
+        #- reload: True
         - full_restart: True
         - watch: 
              - file: /etc/nagios/nrpe.cfg
