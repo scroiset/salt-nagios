@@ -44,6 +44,13 @@ git:
         - pkg: {{ pkgs.sudo }}
     - watch_in:
         - service: nagios-nrpe-server-service
+{% if params.get('pkgs')%}
+{%for p in params.get('pkgs') %}
+{{p}}:
+    pkg.installed
+{%endfor%}
+{%endif%}
+
 {%else%}
   file.absent
 {% endif %}

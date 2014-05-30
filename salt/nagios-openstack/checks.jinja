@@ -11,7 +11,10 @@
 'nova-api': {'path': 'openstack/'},
 'rabbitMQ':{'path': 'openstack/'},
 'all_diskstat':{'path': 'openstack/'},
-'mongodb':{'path': 'openstack/'},
+'mongodb':{'path': 'openstack/',
+           'pkgs': ['mongodb-org-shell'],
+           'param_check': '--h localhost ceilometer ' },
 'swap':{},
 'disk':{},
+'mysql':{},
 } %}
