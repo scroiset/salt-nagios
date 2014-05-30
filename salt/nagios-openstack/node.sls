@@ -17,6 +17,14 @@ git:
     - require:
       - pkg: git
 
+{{salt['pillar.get']('nagios_plugins_dir', '/usr/lib/nagios/plugins')}}/openstack:
+  file.directory:
+    - user: root
+    - group : root
+    - file_mode: 0551
+    - recurse:
+      - mode
+
 # sudoers
 {% for os,params in checks.items() %}
 /etc/sudoers.d/{{os}}:
@@ -34,6 +42,8 @@ git:
       path: {{params.get('path', '')}}
     - require:
         - pkg: {{ pkgs.sudo }}
+    - watch_in:
+        - service: nagios-nrpe-server-service
 {%else%}
   file.absent
 {% endif %}
@@ -56,6 +66,10 @@ git:
       path: {{params.get('path','')}}
     - require:
         - pkg: nagios-nrpe-server
+    - watch_in:
+        - service: nagios-nrpe-server-service
+
+
 {%else%}
   file.absent
 {% endif %}

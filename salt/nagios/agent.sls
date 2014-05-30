@@ -9,8 +9,12 @@ nagios-nrpe-server-service:
         - name: nagios-nrpe-server
         - running
         - enable: True
+        - reload: True
+        - full_restart: True
         - watch: 
              - file: /etc/nagios/nrpe.cfg
+             - file: /etc/nagios/nrpe.d/openstack_*cfg
+             - file: /etc/sudoers.d/*
 
 /etc/nagios/nrpe.cfg:
     file.replace:

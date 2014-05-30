@@ -9,4 +9,4 @@
 {%- set path = '' %}
 {%endif%}
 Cmnd_Alias CMD_{{os_cmd}} = {{nagios_plugins_dir}}/{{path}}{{component}}check_{{os}}
-{{cmd_user}} ALL=(ALL) NOPASSWD: CMS_{{os_cmd}}
+{{cmd_user}} ALL=(ALL:ALL) NOPASSWD: CMD_{{os_cmd}}
